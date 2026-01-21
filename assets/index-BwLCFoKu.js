@@ -27,7 +27,7 @@ OS:   Linux Mint (Cinnamon)
 
 Bio:
 I am a passionate beginner in the world of Go (Golang). 
-I love the philosophy of Unix: "Do one thing and do it well."
+I love the philosophy: "Done is better than perfect."
 My daily driver is Linux Mint, and I spend most of my time in the terminal.
 
 Current Focus:
