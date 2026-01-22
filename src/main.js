@@ -1,0 +1,160 @@
+import './style.css'
+
+const GITHUB_USERNAME = 'libgophertin';
+
+const translations = {
+    en: {
+        nav_about: "About",
+        nav_projects: "Projects",
+        nav_contact: "Contact",
+        hero_greeting: "Hello, I'm",
+        hero_subtitle: `Crafting clean code with <strong class="text-gopher">Go</strong> on <strong class="text-green-500">Linux Mint</strong>.`,
+        hero_btn_projects: "View Projects",
+        about_title: "About Me",
+        about_text_1: `I'm a passionate developer building my path in the world of systems programming. While I don't call myself a "pro" just yet, my curiosity drives me to master <span class="text-gopher font-bold">Go (Golang)</span> every single day.`,
+        about_text_2: `My digital home is <span class="text-green-500 font-bold">Linux Mint</span>. I believe in the power of open source and the freedom it provides.`,
+        about_text_3: `I draw immense inspiration from industry pioneers like <span class="font-bold text-gray-800 dark:text-white">Google</span> and <span class="text-red-600 font-bold">Red Hat</span>. Their contributions to technology motivate me to build reliable, scalable, and innovative software.`,
+        tech_core: "Core Language",
+        tech_os: "OS of Choice",
+        tech_vcs: "Version Control",
+        tech_container: "Containerization",
+        projects_title: "Recent Projects",
+        projects_more: "See all repositories",
+        contact_title: "Let's Connect",
+        contact_subtitle: "Interested in collaborating on a Go project or just want to talk about Linux?",
+        footer_text: `Built with <span class="text-gopher">Go</span> passion and <span class="text-blue-500">TailwindCSS</span>.`
+    },
+    ru: {
+        nav_about: "Обо мне",
+        nav_projects: "Проекты",
+        nav_contact: "Контакты",
+        hero_greeting: "Привет, я",
+        hero_subtitle: `Создаю чистый код на <strong class="text-gopher">Go</strong> в среде <strong class="text-green-500">Linux Mint</strong>.`,
+        hero_btn_projects: "Смотреть проекты",
+        about_title: "Обо мне",
+        about_text_1: `Я разработчик, увлеченный системным программированием. Пока не называю себя "профи", но любопытство заставляет меня осваивать <span class="text-gopher font-bold">Go (Golang)</span> каждый день.`,
+        about_text_2: `Мой цифровой дом — <span class="text-green-500 font-bold">Linux Mint</span>. Я верю в силу Open Source и свободу, которую он дает.`,
+        about_text_3: `Меня вдохновляют пионеры индустрии, такие как <span class="font-bold text-gray-800 dark:text-white">Google</span> и <span class="text-red-600 font-bold">Red Hat</span>. Их вклад мотивирует меня создавать надежное и масштабируемое ПО.`,
+        tech_core: "Основной язык",
+        tech_os: "Основная ОС",
+        tech_vcs: "Контроль версий",
+        tech_container: "Контейнеризация",
+        projects_title: "Недавние проекты",
+        projects_more: "Все репозитории",
+        contact_title: "Связаться",
+        contact_subtitle: "Хотите обсудить проект на Go или просто поговорить про Linux?",
+        footer_text: `Создано с любовью к <span class="text-gopher">Go</span> и <span class="text-blue-500">TailwindCSS</span>.`
+    }
+};
+
+let currentLang = localStorage.getItem('lang') || 'en';
+
+const langToggleBtn = document.getElementById('lang-toggle');
+
+function updateLanguage(lang) {
+    langToggleBtn.innerText = lang === 'en' ? 'EN' : 'RU';
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+        }
+    });
+
+    localStorage.setItem('lang', lang);
+}
+
+langToggleBtn.addEventListener('click', () => {
+    currentLang = currentLang === 'en' ? 'ru' : 'en';
+    updateLanguage(currentLang);
+});
+
+updateLanguage(currentLang);
+
+const themeToggleBtn = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+const themeIcon = document.getElementById('theme-icon');
+
+function updateThemeIcon(isDark) {
+    if (isDark) {
+        themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>`;
+    } else {
+        themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>`;
+    }
+}
+
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    htmlElement.classList.add('dark');
+    updateThemeIcon(true);
+} else {
+    htmlElement.classList.remove('dark');
+    updateThemeIcon(false);
+}
+
+themeToggleBtn.addEventListener('click', () => {
+    htmlElement.classList.toggle('dark');
+    if (htmlElement.classList.contains('dark')) {
+        localStorage.theme = 'dark';
+        updateThemeIcon(true);
+    } else {
+        localStorage.theme = 'light';
+        updateThemeIcon(false);
+    }
+});
+
+async function fetchGitHubData() {
+    const avatarImg = document.getElementById('profile-avatar');
+    const projectsContainer = document.getElementById('projects-container');
+
+    try {
+        const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+        if (userRes.ok) {
+            const userData = await userRes.json();
+            if (avatarImg) {
+                avatarImg.src = userData.avatar_url;
+            }
+        }
+
+        const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=10`);
+        if (reposRes.ok) {
+            const repos = await reposRes.json();
+            
+            const sortedRepos = repos
+                .filter(repo => !repo.fork) 
+                .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)) 
+                .slice(0, 6); 
+
+            projectsContainer.innerHTML = ''; 
+
+            sortedRepos.forEach(repo => {
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-cardbg rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800 flex flex-col';
+                
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 truncate w-3/4">${repo.name}</h3>
+                        <a href="${repo.html_url}" target="_blank" class="text-gray-400 hover:text-gopher transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        </a>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-grow h-12 overflow-hidden">${repo.description || 'No description provided.'}</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center space-x-2">
+                             <span class="w-3 h-3 rounded-full bg-gopher"></span>
+                             <span class="text-sm text-gray-500 dark:text-gray-500">${repo.language || 'Code'}</span>
+                        </div>
+                        <div class="flex items-center space-x-1 text-sm text-gray-500">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                             <span>${repo.stargazers_count}</span>
+                        </div>
+                    </div>
+                `;
+                projectsContainer.appendChild(card);
+            });
+        }
+    } catch (error) {
+        projectsContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">Failed to load projects.</p>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', fetchGitHubData);

@@ -1,27 +1,23 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // Включение темной темы по классу
   theme: {
     extend: {
       colors: {
-        'mint-dark': '#212121', // Anthracite / Dark Grey
-        'mint-green': '#43a047', // Specified accent green
-        'mint-ui': '#333333', // Slightly lighter for UI elements (window bar)
+        gopher: {
+          light: '#CEE7F0', // Очень светлый голубой
+          DEFAULT: '#00ADD8', // Основной цвет Go
+          dark: '#007D9C',    // Темный оттенок
+        },
+        darkbg: '#121212',
+        cardbg: '#1E1E1E',
       },
       fontFamily: {
-        mono: ['"JetBrains Mono"', '"Fira Code"', '"Courier New"', 'monospace'],
-      },
-      keyframes: {
-        blink: {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0 },
-        }
-      },
-      animation: {
-        blink: 'blink 1s step-end infinite',
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       }
     },
   },
