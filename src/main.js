@@ -10,6 +10,7 @@ const translations = {
         hero_greeting: "Hello, I'm",
         hero_subtitle: `Crafting clean code with <strong class="text-gopher">Go</strong> on <strong class="text-green-500">Linux Mint</strong>.`,
         hero_btn_projects: "View Projects",
+        hero_btn_discord: "Discord Server",
         about_title: "About Me",
         about_text_1: `I'm a passionate developer building my path in the world of systems programming. While I don't call myself a "pro" just yet, my curiosity drives me to master <span class="text-gopher font-bold">Go (Golang)</span> every single day.`,
         about_text_2: `My digital home is <span class="text-green-500 font-bold">Linux Mint</span>. I believe in the power of open source and the freedom it provides.`,
@@ -22,6 +23,7 @@ const translations = {
         projects_more: "See all repositories",
         contact_title: "Let's Connect",
         contact_subtitle: "Interested in collaborating on a Go project or just want to talk about Linux?",
+        contact_discord: "Discord Server",
         footer_text: `Built with <span class="text-gopher">Go</span> passion and <span class="text-blue-500">TailwindCSS</span>.`
     },
     ru: {
@@ -31,6 +33,7 @@ const translations = {
         hero_greeting: "Привет, я",
         hero_subtitle: `Создаю чистый код на <strong class="text-gopher">Go</strong> в среде <strong class="text-green-500">Linux Mint</strong>.`,
         hero_btn_projects: "Смотреть проекты",
+        hero_btn_discord: "Discord сервер",
         about_title: "Обо мне",
         about_text_1: `Я разработчик, увлеченный системным программированием. Пока не называю себя "профи", но любопытство заставляет меня осваивать <span class="text-gopher font-bold">Go (Golang)</span> каждый день.`,
         about_text_2: `Мой цифровой дом — <span class="text-green-500 font-bold">Linux Mint</span>. Я верю в силу Open Source и свободу, которую он дает.`,
@@ -43,6 +46,7 @@ const translations = {
         projects_more: "Все репозитории",
         contact_title: "Связаться",
         contact_subtitle: "Хотите обсудить проект на Go или просто поговорить про Linux?",
+        contact_discord: "Discord сервер",
         footer_text: `Создано с любовью к <span class="text-gopher">Go</span> и <span class="text-blue-500">TailwindCSS</span>.`
     }
 };
@@ -103,18 +107,9 @@ themeToggleBtn.addEventListener('click', () => {
 });
 
 async function fetchGitHubData() {
-    const avatarImg = document.getElementById('profile-avatar');
     const projectsContainer = document.getElementById('projects-container');
 
     try {
-        const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
-        if (userRes.ok) {
-            const userData = await userRes.json();
-            if (avatarImg) {
-                avatarImg.src = userData.avatar_url;
-            }
-        }
-
         const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=10`);
         if (reposRes.ok) {
             const repos = await reposRes.json();
